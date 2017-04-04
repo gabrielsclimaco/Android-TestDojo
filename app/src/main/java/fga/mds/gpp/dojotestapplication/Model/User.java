@@ -8,8 +8,12 @@ public class User {
     private Integer age;
 
     public User(String name, String age) throws UserException{
-        setName(name);
-        setAge(age);
+        try {
+            setName(name);
+            setAge(age);
+        } catch (UserException exception) {
+            throw (exception);
+        }
     }
 
     private void setName(String name) throws UserException {
@@ -41,5 +45,4 @@ public class User {
     public Integer getAge() {
         return age;
     }
-
 }
