@@ -1,7 +1,9 @@
 package fga.mds.gpp.dojotestapplication.DAO;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONStringer;
@@ -29,12 +31,14 @@ public class PostRequest extends AsyncTask<String, String, String> {
 
     private User user;
     private String url;
+    private Context context;
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private Integer response;
+    private String responseCode;
 
-    public PostRequest(User user, String url){
+    public PostRequest(User user, String url, Context context){
         this.user = user;
         this.url = url;
+        this.context = context;
     }
 
     @Override
@@ -55,6 +59,7 @@ public class PostRequest extends AsyncTask<String, String, String> {
 
         try {
             Response response = client.newCall(request).execute();
+            responseCode = String.valueOf(response.code());
             return response.body().toString();
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,5 +68,9 @@ public class PostRequest extends AsyncTask<String, String, String> {
         return null;
     }
 
-
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+        Toast.makeText(context, responseCode, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try{
             User user = new User(userName, userAge);
 
-            Toast.makeText(getApplicationContext(), user.getName() + user.getAge().toString(),
-                    Toast.LENGTH_SHORT).show();
-
-            new PostRequest(user, "https://trezentos-api.herokuapp.com/api/user/register").execute();
+            PostRequest postRequest = new PostRequest(user,
+                    "https://trezentos-api.herokuapp.com/api/user/register",
+                    getApplicationContext());
+            postRequest.execute();
 
             mainText.setVisibility(View.VISIBLE);
         }
